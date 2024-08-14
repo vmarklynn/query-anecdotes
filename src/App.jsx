@@ -1,5 +1,7 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import { getAnecdotes } from './services/anecdote'
+import { useQuery } from '@tanstack/react-query'
 
 const App = () => {
 
@@ -7,21 +9,29 @@ const App = () => {
     console.log('vote')
   }
 
-  const anecdotes = [
-    {
-      "content": "If it hurts, do it more often",
-      "id": "47145",
-      "votes": 0
-    },
-  ]
+  const result = useQuery({
+    queryKey: ['anecdotes'],
+    queryFn: getAnecdotes,
+    retry: false
+  })
+
+  if (result.isPending) {
+    return <span>Loading...</span>
+  }
+
+  if (result.isError) {
+    return <span>Anecdote service is unavailable due to server error</span>
+  }
+
+  const anecdotes = result.data
 
   return (
     <div>
       <h3>Anecdote app</h3>
-    
+
       <Notification />
       <AnecdoteForm />
-    
+
       {anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
