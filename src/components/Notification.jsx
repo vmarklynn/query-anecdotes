@@ -1,6 +1,3 @@
-import { useReducer } from "react"
-
-
 const Notification = ({ text }) => {
   const style = {
     border: 'solid',
@@ -12,7 +9,6 @@ const Notification = ({ text }) => {
   return (
     <div style={style}>
       <p>{text}</p>
-
     </div>
   )
 }
