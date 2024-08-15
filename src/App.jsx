@@ -41,7 +41,7 @@ const App = () => {
     <div>
       <h3>Anecdote app</h3>
 
-      <Notification />
+      <Notification text={'This is a test'} />
       <AnecdoteForm />
 
       {anecdotes.map(anecdote =>
